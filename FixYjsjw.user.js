@@ -4,8 +4,7 @@
 // @version      0.25
 // @description  重载金智研究生教务系统部分非W3C方法
 // @author       MisakaQwQ
-// @include      *edu.cn/epstar/app/*
-// @include      *edu.cn/epstar/web/swms/mainframe/home/*
+// @include      *edu.cn/epstar/*
 // @grant        none
 // ==/UserScript==
 
