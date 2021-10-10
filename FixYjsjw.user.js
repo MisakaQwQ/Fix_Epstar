@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         FixYjsjw
 // @namespace    MisakaQwQ
-// @version      0.2
+// @version      0.25
 // @description  重载金智研究生教务系统部分非W3C方法
 // @author       MisakaQwQ
 // @include      *edu.cn/epstar/app/*
@@ -122,3 +122,23 @@ Report_Pyjh = function(sXH)
 CheckSession = function(arg){
     return 0;
 };
+
+MO = function(e)
+{
+    if (!e)
+        var e=window.event;
+    var S=e.srcElement;
+    while (S.tagName!="TD")
+    {S=S.parentElement;}
+    S.className="default_toolbutton_over";
+}
+
+MU = function(e)
+{
+    if (!e)
+        var e=window.event;
+    var S=e.srcElement;
+    while (S.tagName!="TD")
+    {S=S.parentElement;}
+    S.className="default_toolbutton";
+}
