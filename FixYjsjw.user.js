@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         FixYjsjw
 // @namespace    MisakaQwQ
-// @version      0.3
+// @version      0.35
 // @description  重载金智研究生教务系统部分非W3C方法
 // @author       MisakaQwQ
 // @include      *edu.cn/epstar/*
@@ -162,20 +162,19 @@ DataGrid_OnRowMouseOut = function (styClass) {
     } catch (e) { };
 }
 
-DataGrid_OnRowClick = function(){
-	var evtElement = window.event.srcElement;
-	var tableElement = evtElement;
-	while(evtElement.tagName.toLowerCase() != "tr")
-	{
-		evtElement = evtElement.parentNode;
-	}
-	/*
-	while(tableElement.tagName.toLowerCase() != "table" && tableElement.getAttribute("elementType") != "datagrid")
-	{
-		tableElement = tableElement.parentElement;
-	}
-	//tableElement.setAttribute("selcdRowIndex",evtElement.getAttribute("rowindex"));
-	//evtElement.className = "selectrows";*/
+DataGrid_OnRowClick = function () {
+    var evtElement = window.event.srcElement;
+    var tableElement = evtElement;
+    while (evtElement.tagName.toLowerCase() != "tr") {
+        evtElement = evtElement.parentNode;
+    }
+    /*
+    while(tableElement.tagName.toLowerCase() != "table" && tableElement.getAttribute("elementType") != "datagrid")
+    {
+        tableElement = tableElement.parentElement;
+    }
+    //tableElement.setAttribute("selcdRowIndex",evtElement.getAttribute("rowindex"));
+    //evtElement.className = "selectrows";*/
 }
 
 EditField_GetSelectServerItems = function (elSource) {
@@ -528,6 +527,100 @@ ShowDetail = function (sPgxxwid, sBjdm, sZt, sNowDate, sPgkssj, sPgjssj, sSKJS, 
     if (retValue == 1) {
         Page_Reload();
     }
+}
+
+Page_RemoveUrlParam = function (url, name) {
+    if (url == null || url == "")
+        return null;
+    if (name == null || name == "")
+        return null;
+
+    var tempArr, tempArr2, tempUrl;
+    String.prototype.Trim = function () { return this.replace(/^\s+|\s+$/g, ""); }
+    tempUrl = "";
+    tempArr = url.split("&");
+    for (var i = 0; i < tempArr.length; i++) {
+        tempArr2 = tempArr[i].split("=");
+        if (tempArr2.length >= 2) {
+            if (tempArr2[0].Trim().toLowerCase() == name.Trim().toLowerCase()) {
+                //tempUrl = tempUrl + tempArr2[0] + "=" + value;
+                continue;
+            }
+            else {
+                tempUrl = tempUrl + tempArr2[0] + "=" + tempArr2[1];
+                if (tempArr2.length > 2) {
+                    for (var j = 2; j < tempArr2.length; j++) {
+                        tempUrl = tempUrl + "=" + tempArr2[j];
+                    }
+                }
+            }
+        }
+        else {
+            if (tempArr2.length > 0)
+                tempUrl = tempUrl + tempArr2(0);
+        }
+        if (i < tempArr.length - 1)
+            tempUrl = tempUrl + "&";
+    }
+    tempUrl = removeLastStringIfExists(tempUrl, "&");
+    return tempUrl;
+}
+
+removeLastStringIfExists = function (srcStr, lastStr) {
+    if (srcStr == null || srcStr == "" || lastStr == null || lastStr == "") {
+        return srcStr;
+    }
+    if (srcStr.substring(srcStr.length - lastStr.length, srcStr.length) == lastStr) {
+        srcStr = srcStr.substring(0, srcStr.length - lastStr.length);
+    }
+    return srcStr;
+}
+
+Page_SetUrlParamValue = function (url, name, value) {
+    if (url == null || url == "")
+        return null;
+    if (name == null || name == "")
+        return null;
+    if (value == null || value == "")
+        return null;
+
+    var tempArr, tempArr2, tempUrl;
+    var nFlag = false;
+    String.prototype.Trim = function () { return this.replace(/^\s+|\s+$/g, ""); }
+    tempUrl = "";
+    tempArr = url.split("&");
+    for (var i = 0; i < tempArr.length; i++) {
+        tempArr2 = tempArr[i].split("=");
+        if (tempArr2.length >= 2) {
+            if (tempArr2[0].Trim().toLowerCase() == name.Trim().toLowerCase()) {
+                tempUrl = tempUrl + tempArr2[0] + "=" + value;
+                nFlag = true;
+            }
+            else {
+                tempUrl = tempUrl + tempArr2[0] + "=" + tempArr2[1];
+                if (tempArr2.length > 2) {
+                    for (var j = 2; j < tempArr2.length; j++) {
+                        tempUrl = tempUrl + "=" + tempArr2[j];
+                    }
+                }
+            }
+        }
+        else {
+            if (tempArr2.length > 0)
+                tempUrl = tempUrl + tempArr2[0];
+        }
+        if (i < tempArr.length - 1)
+            tempUrl = tempUrl + "&";
+    }
+    if (nFlag == false) {
+        if (tempUrl.charAt(tempUrl.length - 1) == "&") {
+            tempUrl = tempUrl + name + "=" + value + "&";
+        } else {
+            tempUrl = tempUrl + "&" + name + "=" + value + "&";
+        }
+    }
+    tempUrl = removeLastStringIfExists(tempUrl, "&");
+    return tempUrl;
 }
 
 
