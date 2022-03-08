@@ -5,6 +5,7 @@
 // @description  重载金智研究生教务系统部分非W3C方法
 // @author       MisakaQwQ
 // @include      *edu.cn/epstar/*
+// @include      *edu.cn/wsxk/jsp/*
 // @grant        none
 // ==/UserScript==
 
